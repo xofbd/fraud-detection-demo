@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Predicting Fraud</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"> </script> 
+  </head>
+  <body>
+    <h2>Enter the following customer information</h2>
+    <form id="input" method="post" action="predict">
+      purchase value: <input type="number" step="0.01" name="purchase_value"/> </br>
+      age: <input type="number" name="age"/> </br>
+      sign up time: <input type="text" name="signup_time"/> </br>
+      purchase time: <input type="text" name="purchase_time"/> </br>
+      sex: </br>
+      <input type="radio" name="sex" value="M">Male</br>
+      <input type="radio" name="sex" value="F">Female</br>
+      browser: </br>
+      <input type="radio" name="browser" value="Chrome">Chrome</br>
+      <input type="radio" name="browser" value="IE">IE</br>
+      <input type="radio" name="browser" value="FireFox">FireFox</br>
+      <input type="radio" name="browser" value="Opera">Opera</br>
+      <input type="radio" name="browser" value="Safari">Safari</br>
+      source: </br>
+      <input type="radio" name="source" value="Ads">Ads</br>
+      <input type="radio" name="source" value="SEO">SEO</br>
+      <input type="radio" name="source" value="Direct">Direct</br>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
