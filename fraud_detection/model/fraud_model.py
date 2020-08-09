@@ -1,6 +1,5 @@
 import gzip
 import os
-import sys
 
 import dill
 import numpy
@@ -13,7 +12,7 @@ from sklearn.metrics import make_scorer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.compose import ColumnTransformer
 
-from model.custom_estimators import Duration
+from fraud_detection.model.custom_estimators import Duration
 
 
 def create_model():
@@ -46,7 +45,7 @@ def create_model():
 
 def prepare_data():
     """Return training and testing data sets."""
-    file_path = os.path.join('data', 'Fraud_Data.csv')
+    file_path = os.path.join('fraud_detection', 'data', 'Fraud_Data.csv')
     df = pd.read_csv(file_path)
     X = df.drop('class', axis=1)
     y = df['class']
@@ -74,18 +73,17 @@ def cost_function(model, X, y_true):
     return -(false_neg_cost + false_pos_cost)
 
 
-def preserve_model(model, base_name='ml_model'):
+def preserve_model(model, path_name=None):
     """Preserve ML model to disk using dill."""
-    path_name = os.path.join('model', base_name + '.dill.gz')
+    if path_name is None:
+        path_name = os.path.join('fraud_detection', 'model',
+                                 'ml_model.dill.gz')
     with gzip.open(path_name, 'wb') as f:
         dill.dump(model, f)
 
 
-def deploy_model(model_path=None):
+def deploy_model(model_path):
     """Return loaded ML model from disk."""
-    if model_path is None:
-        model_path = os.path.join('model', 'ml_model.dill.gz')
-
     with gzip.open(model_path, 'rb') as f:
         return dill.load(f)
 

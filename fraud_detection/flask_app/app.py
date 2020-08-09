@@ -4,10 +4,11 @@ import sys
 from flask import Flask, render_template, request
 import pandas as pd
 
-from model.fraud_model import deploy_model
+from fraud_detection.model.fraud_model import deploy_model
 
 app = Flask(__name__)
-MODEL = deploy_model(model_path=os.path.join('model', 'ml_model.dill.gz'))
+model_path = os.path.join('fraud_detection', 'model', 'ml_model.dill.gz')
+MODEL = deploy_model(model_path)
 
 
 @app.route('/', methods=['GET'])
@@ -31,9 +32,9 @@ def process_inputs():
     # the DataFrame need to be in the same order as when fitting.
     inputs = dict(request.form)
     inputs.update({'user_id': 0, 'device_id': 0, 'ip_address': 0})
-    df = pd.DataFrame(inputs, index=[0])
 
-    return pd.DataFrame(df,
+    return pd.DataFrame(inputs,
+                        index=[0],
                         columns=['user_id', 'signup_time', 'purchase_time',
                                  'purchase_value', 'device_id', 'source',
                                  'browser', 'sex', 'age', 'ip_address'])
