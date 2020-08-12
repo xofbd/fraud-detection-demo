@@ -10,9 +10,10 @@ deploy: venv fraud_detection/model/ml_model.dill.gz
 	python -m flask run
 
 venv: requirements.txt
-	python3 -m venv venv
+	test -d venv || python3 -m venv venv
 	source venv/bin/activate && \
 	pip install -r requirements.txt
+	touch venv
 
 fraud_detection/model/ml_model.dill.gz: venv
 	source venv/bin/activate && \
