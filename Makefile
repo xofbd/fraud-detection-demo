@@ -1,12 +1,14 @@
 SHELL := /bin/bash
 
-.PHONY: all deploy model update_model clean remove_venv remove_model
+.PHONY: all deploy model clean remove_all
 
-all: venv fraud_detection/model/ml_model.dill.gz deploy
+all: clean_all venv fraud_detection/model/ml_model.dill.gz deploy
 
 deploy: venv fraud_detection/model/ml_model.dill.gz
 	source venv/bin/activate && \
 	export FLASK_APP="fraud_detection/flask_app/app.py" && \
+	export FLASK_ENV=development && \
+	export FLASK_DEBUG=true && \
 	python -m flask run
 
 venv: requirements.txt
@@ -15,18 +17,15 @@ venv: requirements.txt
 	pip install -r requirements.txt
 	touch venv
 
-fraud_detection/model/ml_model.dill.gz: venv
+fraud_detection/model/ml_model.dill.gz: venv fraud_detection/model/fraud_model.py
 	source venv/bin/activate && \
 	python -m fraud_detection.model.fraud_model
 
-model: venv fraud_detection/model/ml_model.dill.gz
+model: fraud_detection/model/ml_model.dill.gz
 
-update_model: venv remove_model fraud_detection/model/ml_model.dill.gz
-
-clean: remove_venv remove_model
-
-remove_venv:
+clean:
 	rm -rf venv
+	find . | grep __pycache__ | xargs rm -rf
 
-remove_model:
+clean_all: clean
 	rm -f fraud_detection/model/ml_model.dill.gz
