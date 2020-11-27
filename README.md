@@ -13,8 +13,13 @@ You may want to run the app using Flask locally before deploying it to Heroku, e
 
 If you are using Windows, you can:
 1. create and activate the virtual environment.
-1. `set FLASK_APP=app.py` in the command line.
+1. `set FLASK_APP=fraud_detection/flask_app/app.py` in the command line.
 1. run `python -m flask run`.
+
+Alternatively, you can deploy using [Docker](https://www.docker.com/).
+
+1. `docker build -t fraud_detection .`
+1. `docker run -d -p 5000:5000 fraud_detection`
 
 ## Deploying to Heroku
 Make sure your app is ready to be deployed to Heroku by running Flask locally. To deploy to Heroku:
