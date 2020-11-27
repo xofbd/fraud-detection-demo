@@ -2,15 +2,13 @@ import gzip
 import os
 
 import dill
-import numpy
 import pandas as pd
 
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.pipeline import Pipeline
-from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.metrics import make_scorer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.compose import ColumnTransformer
+from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder
 
 from fraud_detection.model.custom_estimators import Duration
 
@@ -38,7 +36,10 @@ def create_model():
     param_grid = {'classifier__max_depth': range(2, 20),
                   'classifier__class_weight': ['balanced', None]}
     grid_search = GridSearchCV(model, param_grid,
-                               cv=5, n_jobs=2, verbose=1, scoring=cost_function)
+                               cv=5,
+                               n_jobs=2,
+                               verbose=1,
+                               scoring=cost_function)
 
     return grid_search.fit(X_train, y_train)
 
