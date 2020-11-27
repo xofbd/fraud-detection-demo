@@ -46,7 +46,7 @@ def create_model():
 
 def prepare_data():
     """Return training and testing data sets."""
-    file_path = os.path.join('fraud_detection', 'data', 'Fraud_Data.csv')
+    file_path = os.path.join('data', 'Fraud_Data.csv')
     df = pd.read_csv(file_path)
     X = df.drop('class', axis=1)
     y = df['class']
