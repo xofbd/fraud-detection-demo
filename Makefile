@@ -1,31 +1,35 @@
 SHELL := /bin/bash
+ACTIVATE_VENV := source venv/bin/activate
 
-.PHONY: all deploy model clean remove_all
+.PHONY: all
+all: clean-all deploy
 
-all: clean_all venv fraud_detection/model/ml_model.dill.gz deploy
+.PHONY: deploy deploy-docker docker-rm
+deploy: fraud_detection/model/ml_model.dill.gz | venv
+	$(ACTIVATE_VENV) && bin/deploy
 
-deploy: venv fraud_detection/model/ml_model.dill.gz
-	source venv/bin/activate && \
-	export FLASK_APP="fraud_detection/flask_app/app.py" && \
-	export FLASK_ENV=development && \
-	export FLASK_DEBUG=true && \
-	python -m flask run
+deploy-docker: fraud_detection/model/ml_model.dill.gz docker-rm
+	docker build -t fraud_detection .
+	docker run -d -p 5000:5000 flask_app fraud_detection
+
+docker-rm:
+	-docker rm -f flask_app
 
 venv: requirements.txt
-	test -d venv || python3 -m venv venv
-	source venv/bin/activate && \
-	pip install -r requirements.txt
-	touch venv
+	test -d $@ || python3 -m venv $@
+	$(ACTIVATE_VENV) && pip install -r $<
+	touch $@
 
-fraud_detection/model/ml_model.dill.gz: venv fraud_detection/model/fraud_model.py
-	source venv/bin/activate && \
-	python -m fraud_detection.model.fraud_model
-
+.PHONY: model
 model: fraud_detection/model/ml_model.dill.gz
 
+fraud_detection/model/ml_model.dill.gz: fraud_detection/model/fraud_model.py | venv
+	$(ACTIVATE_VENV) && python -m fraud_detection.model.fraud_model
+
+.PHONY: clean clean-all
 clean:
 	rm -rf venv
 	find . | grep __pycache__ | xargs rm -rf
 
-clean_all: clean
+clean-all: clean
 	rm -f fraud_detection/model/ml_model.dill.gz
