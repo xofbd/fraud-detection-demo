@@ -8,9 +8,9 @@ all: clean-all deploy
 deploy: fraud_detection/model/ml_model.dill.gz | venv
 	$(ACTIVATE_VENV) && bin/deploy
 
-deploy-docker: fraud_detection/model/ml_model.dill.gz docker-rm
+deploy-docker: docker-rm | fraud_detection/model/ml_model.dill.gz
 	docker build -t fraud_detection .
-	docker run -d -p 5000:5000 flask_app fraud_detection
+	docker run -d -p 5000:5000 --name flask_app fraud_detection
 
 docker-rm:
 	-docker rm -f flask_app
