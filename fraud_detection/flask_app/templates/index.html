@@ -2,32 +2,114 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Predicting Fraud</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"> </script> 
   </head>
   <body>
     <h2>Enter the following customer information</h2>
     <form id="input" method="post" action="predict">
-      purchase value: <input type="number" step="0.01" value="10.0" name="purchase_value"/> </br>
-      age: <input type="number" value="20" name="age"/> </br>
-      sign up time: <input type="text" value="2020-01-01 00:00:00" name="signup_time"/> </br>
-      purchase time: <input type="text" value= "2020-01-01 01:00:00" name="purchase_time"/> </br>
-      sex: </br>
-      <input type="radio" name="sex" value="M">Male</br>
-      <input type="radio" name="sex" value="F">Female</br>
-      browser: </br>
-      <input type="radio" name="browser" value="Chrome">Chrome</br>
-      <input type="radio" name="browser" value="IE">IE</br>
-      <input type="radio" name="browser" value="FireFox">FireFox</br>
-      <input type="radio" name="browser" value="Opera">Opera</br>
-      <input type="radio" name="browser" value="Safari">Safari</br>
-      source: </br>
-      <input type="radio" name="source" value="Ads">Ads</br>
-      <input type="radio" name="source" value="SEO">SEO</br>
-      <input type="radio" name="source" value="Direct">Direct</br>
-      <input type="submit" value="Submit">
+      <div class="row mb-3">
+	<label for="purchase_value" class="col-sm-2 col-form-label">Purchase Value</label>
+	<div class="col-sm-10">
+	  <input type="number" step="0.01" value="10.0" name="purchase_value" id="purchase_value" class="form-control">
+	</div>
+      </div>
+      <div class="row mb-3">
+        <label for="age" class="col-sm-2 col-form-label">Age</label>
+	<div class="col-sm-10">
+	  <input type="number" value="20" name="age" id="age" class="form-control">
+	</div>
+      </div>
+      <div class="row mb-3">
+        <label for="signup_time" class="col-sm-2 col-form-label">Sign Up Date and Time</label>
+	<div class="col-sm-10">
+	  <input type="text" value="2020-01-01 00:00:00" name="signup_time" id="signup_time" class="form-control">
+	</div>
+      </div>
+      <div class="row mb-3">
+        <label for="purchase_time" class="col-sm-2 col-form-label">Purchase Date and Time</label>
+	<div class="col-sm-10">
+	  <input type="text" value="2020-01-01 00:00:00" name="purchase_time" id="purchase_time" class="form-control">
+	</div>
+      </div>
+      <fieldset class="row mb-3">
+	<div class="row">
+	  <legend class="col-form-label col-sm-2 pt-0">Sex</legend>
+	  <div class="col-sm-10">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="sex" id="male" value="M">
+              <label class="form-check-label" for="male">Male</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="sex" id="female" value="F">
+              <label class="form-check-label" for="female">Female</label>
+            </div>
+	  </div>
+	</div>
+      </fieldset>
+      <fieldset class="row mb-3">
+	<div class="row">
+	  <legend class="col-form-label col-sm-2 pt-0">Browser</legend>
+	  <div class="col-sm-10">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="browser" id="chrome" value="Chrome">
+              <label class="form-check-label" for="chrome">
+		Chrome
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="browser" id="IE" value="IE">
+              <label class="form-check-label" for="IE">
+		Internet Explorer
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="browser" id="opera" value="Opera">
+              <label class="form-check-label" for="opera">
+		Opera
+              </label>
+            </div>
+            <div class="form-check disabled">
+              <input class="form-check-input" type="radio" name="browser" id="safari" value="Safari">
+              <label class="form-check-label" for="safari">
+		Safari
+              </label>
+            </div>
+	  </div>
+	</div>
+      </fieldset>
+      <fieldset class="row mb-3">
+	<div class="row">
+	  <legend class="col-form-label col-sm-2 pt-0">Source</legend>
+	  <div class="col-sm-10">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="source" id="ads" value="Ads">
+              <label class="form-check-label" for="ads">
+		Ads
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="source" id="SEO" value="SEO">
+              <label class="form-check-label" for="SEO">
+		Search Engine Optimization (SEO)
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="source" id="direct" value="Direct">
+              <label class="form-check-label" for="direct">
+		Direct
+              </label>
+            </div>
+	  </div>
+	</div>
+      </fieldset>
+      <div class="form-group row">
+	<div class="col-sm-10">
+	  <button type="submit" class="btn btn-primary">Predict</button>
+	</div>
+      </div>
     </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
